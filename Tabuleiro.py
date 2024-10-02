@@ -1,28 +1,31 @@
 class Tabuleiro:
     def __init__(self):
         self.tab = [ [0 for x in range(3)] for y in range(3)]
-        self.vez = 1
+        self.vez = -1
         self.historico = []
     
-    def Jogada_P(self, x,y):
+    def Jogada_P(self, x,y, retorna_tab = False):
         if(self.tab[x][y] != 0):
             print(f"Jogada Invalida Player: ({x},{y}) ")
-            return -1
+            return "Invalido"
         self.tab[x][y] = 1
 
         self.vez *= -1
-
+        if(retorna_tab):
+            return (self.Verifica_Vitoria(), self)
         return self.Verifica_Vitoria()    
 
-    def Jogada_C(self, x,y):
+    def Jogada_C(self, x,y, retorna_tab = False):
         if(self.tab[x][y] != 0):
             print(f"Jogada Invalida Computador: ({x},{y}) ")
             return -1
         self.tab[x][y] = -1
         self.vez *= -1
 
-
-        return self.Verifica_Vitoria()
+        if(retorna_tab):
+            return (self.Verifica_Vitoria(), self)
+        return self.Verifica_Vitoria()    
+        
     
     def Mostrar_Tabuleiro(self):
        for x in self.tab:
@@ -68,8 +71,15 @@ class Tabuleiro:
     def Get_Vez(self):
         return self.vez
     
+    def Set_Vez(self, v):
+        self.vez = v
+    
     def Escreve_Historico(self, x, y):
         self.historico.append((x,y))
+        
 
     def Get_Historico(self):
         return self.historico
+    
+    def Get_tab(self):
+        return self.tab
